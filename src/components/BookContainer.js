@@ -6,14 +6,14 @@ const BookContainer = () => {
   const books = [{
     title: 'Fiesty Fiery',
     author: 'Sharon',
-  }]
+  }];
 
   return (
     <>
-    <Booklist books={books}/>
-    <BookInput />
-  </>
-  )
+      <Booklist books={books} />
+      <BookInput />
+    </>
+  );
 };
 
 export default BookContainer;

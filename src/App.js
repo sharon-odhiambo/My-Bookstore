@@ -4,10 +4,10 @@ import './App.css';
 
 function App() {
   return (
-  <BrowserRouter>
-    <Nav />
-  </BrowserRouter>
-  )
+    <BrowserRouter>
+      <Nav />
+    </BrowserRouter>
+  );
 }
 
 export default App;
