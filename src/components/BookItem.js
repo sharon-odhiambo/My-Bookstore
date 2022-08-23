@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const BookItem = ({ book, remove, id }) => (
   <li key={book.id}>
     <div className="book-details">
-      <span>Gothic</span>
+      <span>Category</span>
       <span>{book.title}</span>
       <span>{book.author}</span>
     </div>
