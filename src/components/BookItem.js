@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const BookItem = ({ book }) => (
+const BookItem = ({ book, remove, id }) => (
   <li key={book.id}>
     <div className="book-details">
-      <span>Category</span>
+      <span>Gothic</span>
       <span>{book.title}</span>
       <span>{book.author}</span>
     </div>
     <div>
       <button type="button">Comments</button>
-      <button type="button">Remove</button>
+      <button type="button" id={id} onClick={remove}>Remove</button>
       <button type="button">Edit</button>
     </div>
     <div>
@@ -27,8 +27,8 @@ const BookItem = ({ book }) => (
 );
 BookItem.propTypes = {
   book: PropTypes.objectOf,
-  // handleChangesMade: PropTypes.func.isRequired,
-  // deletedProps: PropTypes.func.isRequired,
+  id: PropTypes.oneOf(['number', 'String']).isRequired,
+  remove: PropTypes.func.isRequired,
 };
 
 export default BookItem;
