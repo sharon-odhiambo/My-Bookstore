@@ -34,9 +34,12 @@ export const getBooks = createAsyncThunk(
 export const removeBook = createAsyncThunk(
   REMOVE_BOOK,
   async (id) => {
-    const data = await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/OTA7sjkaeKazlu1OOxng/books/${id}`);
-    JSON.stringify(id);
-    return data;
+    const data = await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/OTA7sjkaeKazlu1OOxng/books/${id}`, {
+      method: 'DELETE',
+      body: JSON.stringify(id),
+    });
+    const response = await data.json();
+    return response;
   },
 );
 
@@ -49,7 +52,7 @@ const bookReducer = (state = initialState, action) => {
     case `${ADD_BOOK}/fulfilled`:
       return [...state, action.payload];
     case `${REMOVE_BOOK}/fulfilled`:
-      return state.filter((state) => state.id !== action.payload.id);
+      return state.filter((state) => state[0] !== action.payload.id);
     default:
       return state;
   }

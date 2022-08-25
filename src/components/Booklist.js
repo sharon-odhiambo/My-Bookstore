@@ -9,6 +9,7 @@ const Booklist = () => {
   const onClickHandler = (e) => {
     dispatch(removeBook(e.target.id));
   };
+
   useEffect(() => {
     dispatch(getBooks());
   }, [dispatch]);
