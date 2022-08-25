@@ -25,7 +25,10 @@ const BookInput = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     const id = uuidv4();
-    dispatch(addBook(id, booktitle, bookauthor, bookcategory));
+    const book = {
+      id, booktitle, bookauthor, bookcategory,
+    };
+    dispatch(addBook(book));
     setTitle('');
     setAuthor('');
     setCategory('Category');

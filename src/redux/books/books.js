@@ -1,5 +1,5 @@
-// import { v4 as uuidv4 } from 'uuid';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 const ADD_BOOK = 'bookstore-app/books/ADD_BOOK';
 const REMOVE_BOOK = 'bookstore-app/books/REMOVE_BOOK';
@@ -13,24 +13,28 @@ export const getBooks = createAsyncThunk(
     return Object.entries(response);
   },
 );
-// export const addBook = createAsyncThunk(
-//   ADD_BOOK,
-//   async (id, booktitle, bookauthor, bookcategory) => {
-//     const response = await fetch('https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/OTA7sjkaeKazlu1OOxng/books', {
-//       method: 'POST',
-//       headers: {
-//         'Content-type': 'application/json; charset=UTF-8',
-//       },
-//       body: JSON.stringify({
-//         item_id: id, title: booktitle, author: bookauthor, category: bookcategory,
-//       }),
-//     });
-//     console.log(id, booktitle, bookauthor, bookcategory);
-//     const data = await response.json();
-//     console.log(data);
-//     return Object.entries(data);
-//   },
-// );
+export const addBook = createAsyncThunk(
+  ADD_BOOK,
+  async (book) => {
+    await axios.post('https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/OTA7sjkaeKazlu1OOxng/books', {
+      item_id: book.id,
+      title: book.booktitle,
+      author: book.bookauthor,
+      category: book.bookcategory,
+    });
+    return {
+      book: [
+        book.id,
+        [{
+          author: book.author,
+          title: book.title,
+          category: book.category,
+        }],
+      ],
+    };
+  },
+);
+
 export const removeBook = createAsyncThunk(
   REMOVE_BOOK,
   async (id) => {
