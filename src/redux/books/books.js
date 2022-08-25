@@ -1,51 +1,54 @@
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const ADD_BOOK = 'bookstore-app/books/ADD_BOOK';
 const REMOVE_BOOK = 'bookstore-app/books/REMOVE_BOOK';
+const GET_BOOKS = 'bookstore-app/books/GET_BOOKS';
 
-export const addBook = (id, title, author) => ({
-  type: ADD_BOOK,
-  payload: {
-    id,
-    title,
-    author,
+export const getBooks = createAsyncThunk(
+  GET_BOOKS,
+  async () => {
+    const data = await fetch('https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/OTA7sjkaeKazlu1OOxng/books');
+    const response = await data.json();
+    return Object.entries(response);
   },
-});
-export const removeBook = (id) => ({
-  type: REMOVE_BOOK,
-  payload: {
-    id,
+);
+// export const addBook = createAsyncThunk(
+//   ADD_BOOK,
+//   async (id, booktitle, bookauthor, bookcategory) => {
+//     const response = await fetch('https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/OTA7sjkaeKazlu1OOxng/books', {
+//       method: 'POST',
+//       headers: {
+//         'Content-type': 'application/json; charset=UTF-8',
+//       },
+//       body: JSON.stringify({
+//         item_id: id, title: booktitle, author: bookauthor, category: bookcategory,
+//       }),
+//     });
+//     console.log(id, booktitle, bookauthor, bookcategory);
+//     const data = await response.json();
+//     console.log(data);
+//     return Object.entries(data);
+//   },
+// );
+export const removeBook = createAsyncThunk(
+  REMOVE_BOOK,
+  async (id) => {
+    const data = await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/OTA7sjkaeKazlu1OOxng/books/${id}`);
+    JSON.stringify(id);
+    return data;
   },
-});
+);
 
-const initialState = [
-  {
-    id: uuidv4(),
-    title: 'A Song of Ice and Fire',
-    author: 'Ramin Djawadi',
-  },
-  {
-    id: uuidv4(),
-    title: 'Mere Living',
-    author: 'C.S Lewis',
-  },
-  {
-    id: uuidv4(),
-    title: 'Never Split the Difference',
-    author: 'Chris Voss',
-  },
-  {
-    id: uuidv4(),
-    title: 'Getting to Yes',
-    author: 'William Ur',
-  },
-];
+const initialState = [];
 
 const bookReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_BOOK:
+    case `${GET_BOOKS}/fulfilled`:
+      return action.payload;
+    case `${ADD_BOOK}/fulfilled`:
       return [...state, action.payload];
-    case REMOVE_BOOK:
+    case `${REMOVE_BOOK}/fulfilled`:
       return state.filter((state) => state.id !== action.payload.id);
     default:
       return state;

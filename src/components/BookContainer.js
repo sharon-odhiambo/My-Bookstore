@@ -3,10 +3,7 @@ import BookInput from './BookInput';
 import Booklist from './Booklist';
 
 const BookContainer = () => {
-  const books = [{
-    title: 'Fiesty Fiery',
-    author: 'Sharon',
-  }];
+  const books = [];
 
   return (
     <>
