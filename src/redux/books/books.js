@@ -1,15 +1,27 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+// import { useDispatch } from 'react-redux';
 
 const ADD_BOOK = 'bookstore-app/books/ADD_BOOK';
 const REMOVE_BOOK = 'bookstore-app/books/REMOVE_BOOK';
 const GET_BOOKS = 'bookstore-app/books/GET_BOOKS';
 
+// const dispatch = useDispatch();
 export const getBooks = createAsyncThunk(
   GET_BOOKS,
   async () => {
     const data = await fetch('https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/OTA7sjkaeKazlu1OOxng/books');
     const response = await data.json();
-    return Object.entries(response);
+    const newArr = [];
+    const keys = Object.keys(response);
+    keys.map((key) => (
+      newArr.push({
+        item_id: key,
+        title: response[key][0].title,
+        author: response[key][0].author,
+        category: response[key][0].category,
+      })
+    ));
+    return newArr || [];
   },
 );
 export const addBook = createAsyncThunk(
@@ -29,12 +41,11 @@ export const addBook = createAsyncThunk(
 export const removeBook = createAsyncThunk(
   REMOVE_BOOK,
   async (id) => {
-    const data = await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/OTA7sjkaeKazlu1OOxng/books/${id}`, {
+    await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/OTA7sjkaeKazlu1OOxng/books/${id}`, {
       method: 'DELETE',
       body: JSON.stringify(id),
     });
-    const response = await data.json();
-    return response;
+    return id;
   },
 );
 
@@ -44,10 +55,10 @@ const bookReducer = (state = initialState, action) => {
   switch (action.type) {
     case `${GET_BOOKS}/fulfilled`:
       return action.payload;
-    case ADD_BOOK:
+    case `${ADD_BOOK}/fulfilled`:
       return [...state, action.payload];
-    case REMOVE_BOOK:
-      return state.filter((state) => state[0] !== action.payload.id);
+    case `${REMOVE_BOOK}/fulfilled`:
+      return state.filter((state) => state.item_id !== action.payload);
     default:
       return state;
   }

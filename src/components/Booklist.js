@@ -5,10 +5,8 @@ import BookItem from './BookItem';
 
 const Booklist = () => {
   const books = useSelector((state) => state.books);
-  console.log(books);
   const dispatch = useDispatch();
   const onClickHandler = (e) => {
-    dispatch(getBooks());
     dispatch(removeBook(e.target.id));
   };
 
@@ -20,9 +18,9 @@ const Booklist = () => {
     <ul>
       {books.map((book) => (
         <BookItem
-          id={book[0]}
-          key={book[0]}
-          book={book[1][0]}
+          id={book.item_id}
+          key={book.item_id}
+          book={book}
           remove={onClickHandler}
         />
       ))}
