@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { removeBook } from '../redux/books/books';
+import { removeBook, getBooks } from '../redux/books/books';
 import BookItem from './BookItem';
 
 const Booklist = () => {
@@ -10,12 +10,16 @@ const Booklist = () => {
     dispatch(removeBook(e.target.id));
   };
 
+  useEffect(() => {
+    dispatch(getBooks());
+  }, []);
+
   return (
     <ul>
       {books.map((book) => (
         <BookItem
-          id={book.id}
-          key={book.id}
+          id={book.item_id}
+          key={book.item_id}
           book={book}
           remove={onClickHandler}
         />

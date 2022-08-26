@@ -1,10 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 
 const BookItem = ({ book, remove, id }) => (
-  <li key={book.id}>
+  <li key={id}>
     <div className="book-details">
-      <span>Category</span>
+      <span>{book.category}</span>
       <span>{book.title}</span>
       <span>{book.author}</span>
     </div>
@@ -25,14 +25,15 @@ const BookItem = ({ book, remove, id }) => (
     </div>
   </li>
 );
-BookItem.propTypes = {
-  book: PropTypes.objectOf,
-  id: PropTypes.oneOf(['number', 'String']).isRequired,
-  remove: PropTypes.func.isRequired,
-};
 
 export default BookItem;
 
-BookItem.defaultProps = {
-  book: {},
+BookItem.propTypes = {
+  id: propTypes.string.isRequired,
+  remove: propTypes.func.isRequired,
+  book: propTypes.shape({
+    title: propTypes.string.isRequired,
+    author: propTypes.string.isRequired,
+    category: propTypes.string.isRequired,
+  }).isRequired,
 };
