@@ -1,7 +1,8 @@
+/* eslint-disable camelcase */
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux/es/exports';
 import { v4 as uuidv4 } from 'uuid';
-import { addBook } from '../redux/books/books';
+import { addBook, getBooks } from '../redux/books/books';
 
 const BookInput = () => {
   const [booktitle, setTitle] = useState('');
@@ -24,11 +25,12 @@ const BookInput = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const id = uuidv4();
+    const item_id = uuidv4();
     const book = {
-      id, booktitle, bookauthor, bookcategory,
+      item_id, title: booktitle, author: bookauthor, category: bookcategory,
     };
     dispatch(addBook(book));
+    dispatch(getBooks());
     setTitle('');
     setAuthor('');
     setCategory('Category');

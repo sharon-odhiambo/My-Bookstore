@@ -5,8 +5,10 @@ import BookItem from './BookItem';
 
 const Booklist = () => {
   const books = useSelector((state) => state.books);
+  console.log(books);
   const dispatch = useDispatch();
   const onClickHandler = (e) => {
+    dispatch(getBooks());
     dispatch(removeBook(e.target.id));
   };
 
