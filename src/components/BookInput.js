@@ -7,7 +7,7 @@ import { addBook } from '../redux/books/books';
 const BookInput = () => {
   const [booktitle, setTitle] = useState('');
   const [bookauthor, setAuthor] = useState('');
-  const [bookcategory, setCategory] = useState('');
+  const [bookcategory, setCategory] = useState('General');
   const dispatch = useDispatch();
 
   const onTitleChange = (e) => {
@@ -20,7 +20,7 @@ const BookInput = () => {
 
   const categoryPick = ['Action', 'Fiction', 'Crime', 'Thriller', 'Economy', 'Gothic'];
   const onCategoryPick = (e) => {
-    setCategory(e.target.value);
+    setCategory(e.target.value.toUpperCase());
   };
 
   const onSubmit = (e) => {
@@ -35,8 +35,8 @@ const BookInput = () => {
     setCategory('Category');
   };
   return (
-    <div>
-      <h2>Add a New Book</h2>
+    <div className="book-form">
+      <h2>ADD NEW BOOK</h2>
       <form onSubmit={onSubmit}>
         <input type="text" placeholder="Book Title" onChange={onTitleChange} name="title" value={booktitle} />
         <input type="text" placeholder="Book Author" onChange={onAuthorChange} name="author" value={bookauthor} />
@@ -46,7 +46,7 @@ const BookInput = () => {
           ))}
         </select>
         <button type="submit">
-          Add Book
+          ADD BOOK
         </button>
       </form>
     </div>

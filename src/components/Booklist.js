@@ -15,16 +15,19 @@ const Booklist = () => {
   }, []);
 
   return (
-    <ul>
-      {books.map((book) => (
-        <BookItem
-          id={book.item_id}
-          key={book.item_id}
-          book={book}
-          remove={onClickHandler}
-        />
-      ))}
-    </ul>
+    <>
+      <ul>
+        {books.map((book) => (
+          <BookItem
+            id={book.item_id}
+            key={book.item_id}
+            book={book}
+            remove={onClickHandler}
+          />
+        ))}
+      </ul>
+      <hr />
+    </>
   );
 };
 
