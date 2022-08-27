@@ -1,12 +1,12 @@
 # My-Bookstore
-- This is a setup for a Math magicians project that will allow the user to use the calculator on the screen. This app has been created with [Create React App](https://github.com/facebook/create-react-app).
+- This is a Bookstore App that allows the user to add or remove the book and the changes will be persisted in the server. 
 
 ## Built With
 
 - Major languages 
   HTML | JavaScript
 - Frameworks
-    React
+    React | Redux
   
  ### Prerequisites
 HTML || CSS
